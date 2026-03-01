@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Meghna Yadav | Frontend Engineer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Portfolio of a frontend engineer skilled in React, TypeScript, and modern web development." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --bg-soft: rgba(255, 255, 255, 0.04);
+      --accent: #7c3aed;
+      --accent-soft: rgba(124, 58, 237, 0.15);
+      --accent-strong: #a855f7;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --chip-bg: rgba(15, 23, 42, 0.8);
+      --shadow-soft: 0 18px 50px rgba(15, 23, 42, 0.7);
+      --radius-lg: 18px;
+      --radius-full: 999px;
+      --nav-height: 68px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f9fafb;
+      --bg-elevated: #ffffff;
+      --bg-soft: rgba(15, 23, 42, 0.03);
+      --accent: #7c3aed;
+      --accent-soft: rgba(124, 58, 237, 0.08);
+      --accent-strong: #6d28d9;
+      --text-main: #020617;
+      --text-muted: #6b7280;
+      --border-subtle: rgba(148, 163, 184, 0.4);
+      --chip-bg: rgba(15, 23, 42, 0.04);
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    /* NAVBAR */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom,
+          rgba(15, 23, 42, 0.9),
+          rgba(15, 23, 42, 0.7),
+          transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+      margin-bottom: 26px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg,
+          #22c55e,
+          #22d3ee,
+          #6366f1,
+          #7c3aed,
+          #eab308,
+          #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #020617;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.9);
+    }
+
+    .nav-name {
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .nav-links a {
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid transparent;
+      transition: all 0.18s ease-out;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.7);
+      background-color: rgba(15, 23, 42, 0.4);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-button {
+      border-radius: 999px;
+      padding: 8px 16px;
+      border: 1px solid var(--accent-soft);
+      color: var(--accent-strong);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease-out;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.92);
+    }
+
+    .pill-button:hover {
+      background: radial-gradient(circle at top left, #4f46e5, #7c3aed);
+      color: #f9fafb;
+      transform: translateY(-1px);
+      border-color: transparent;
+      box-shadow: 0 18px 40px rgba(55, 48, 163, 0.6);
+    }
+
+    .toggle {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.8);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.18s ease-out;
+    }
+
+    .toggle:hover {
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 32px;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    .hero-main {
+      background: radial-gradient(circle at top left, #1d2538, #020617 55%);
+      border-radius: 32px;
+      padding: 28px 26px 26px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.15;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(45, 212, 191, 0.8), transparent 60%),
+        radial-gradient(circle at 80% 10%, rgba(59, 130, 246, 0.7), transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(236, 72, 153, 0.7), transparent 60%);
+      filter: blur(12px);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 9px 4px 4px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+
+    .hero-kicker-pill {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      background: radial-gradient(circle at top left, #4f46e5, #7c3aed);
+      color: white;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4vw, 34px);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(120deg, #a855f7, #4f46e5, #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .hero-meta-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .cta-primary {
+      border-radius: 999px;
+      padding: 10px 18px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #f9fafb;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 18px 40px rgba(79, 70, 229, 0.7);
+      transition: transform 0.16s ease-out, box-shadow 0.16s ease-out,
+        filter 0.16s ease-out;
+      text-decoration: none;
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 22px 48px rgba(79, 70, 229, 0.85);
+    }
+
+    .cta-secondary {
+      border-radius: 999px;
+      padding: 9px 16px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.16s ease-out;
+    }
+
+    .cta-secondary:hover {
+      border-style: solid;
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-1px);
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .hero-footer span strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .hero-side {
+      position: relative;
+      border-radius: 28px;
+      padding: 20px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top, #111827, #020617);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-badge {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hero-chip {
+      border-radius: 16px;
+      padding: 9px 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-chip strong {
+      font-size: 12px;
+    }
+
+    .hero-chip small {
+      color: var(--text-muted);
+    }
+
+    .hero-chip-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .hero-chip-tag {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .hero-orbit {
+      position: absolute;
+      inset: -40%;
+      opacity: 0.4;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.6), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(251, 113, 133, 0.6), transparent 60%);
+      filter: blur(30px);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    /* SECTIONS */
+    .sections {
+      display: grid;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.6fr);
+      gap: 26px;
+    }
+
+    section {
+      margin-bottom: 24px;
+    }
+
+    .section-card {
+      border-radius: 22px;
+      padding: 18px 18px 16px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      opacity: 0.05;
+      background: radial-gradient(circle at top left, #4f46e5, transparent 55%);
+      pointer-events: none;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .section-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* EXPERIENCE */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .experience-item {
+      padding: 11px 11px 10px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      position: relative;
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .experience-role {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .experience-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .experience-meta span {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .experience-points {
+      margin-top: 6px;
+      padding-left: 18px;
+      color: var(--text-muted);
+    }
+
+    .experience-points li {
+      margin-bottom: 4px;
+    }
+
+    /* SKILLS */
+    .skills-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .skills-group-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: var(--chip-bg);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .chip-dot.comfortable {
+      background: #f97316;
+    }
+
+    /* EDUCATION & ACHIEVEMENTS */
+    .edu-item {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .edu-item strong {
+      display: block;
+    }
+
+    .edu-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .achievement-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .achievement-list li {
+      margin-bottom: 6px;
+    }
+
+    .achievement-tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      margin-right: 6px;
+      color: var(--text-main);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .project-card {
+      border-radius: 16px;
+      padding: 10px 11px 9px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .project-title {
+      font-weight: 600;
+    }
+
+    .project-badge {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+    }
+
+    .project-body {
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .project-tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+    }
+
+    /* CONTACT / FOOTER */
+    .contact-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .contact-list a {
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+
+    .contact-list a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 4px 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .footer span strong {
+      color: var(--text-main);
+    }
+
+    /* ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-side {
+        order: -1;
+      }
+
+      .sections {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav {
+        border-radius: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        padding: 16px 14px 60px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-main {
+        padding: 22px 18px 18px;
+      }
+
+      .section-card {
+        padding: 16px 14px 14px;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="nav-logo">M</div>
+        <div class="nav-name">Meghna Yadav</div>
+      </div>
+      <nav class="nav-links">
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="toggle" id="themeToggle" aria-label="Toggle theme">
+          ☾
+        </button>
+        <a href="#contact" class="pill-button">
+          <span>Open to Opportunities</span>
+          <span>→</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main>
+      <section class="hero">
+        <div class="hero-main reveal">
+          <div class="hero-content">
+            <div class="hero-kicker">
+              <span class="hero-kicker-pill">Frontend Engineer</span>
+              <span>React • TypeScript • DX focused</span>
+            </div>
+            <h1 class="hero-title">
+              Crafting reliable, human‑centric
+              <span class="hero-highlight">frontend experiences</span>.
+            </h1>
+            <p class="hero-subtitle">
+              I’m a frontend engineer with 4+ years of experience building performant web
+              platforms, design systems, and internal tools — from video assessment
+              products to CMS builders and real‑time chat experiences.
+            </p>
+            <div class="hero-meta">
+              <div class="hero-meta-item">
+                <span class="hero-meta-dot"></span>
+                <span>Currently at ComeOn Group · Frontend</span>
+              </div>
+              <div class="hero-meta-item">
+                <span>Ex‑Nielsen · InterviewBit (Scaler)</span>
+              </div>
+            </div>
+            <div class="hero-cta">
+              <a href="#projects" class="cta-primary">
+                <span>View selected work</span>
+                <span>↳</span>
+              </a>
+              <a href="#contact" class="cta-secondary">
+                <span>Let’s collaborate</span>
+              </a>
+            </div>
+            <div class="hero-footer">
+              <span>
+                <strong>4+ years</strong> frontend experience
+              </span>
+              <span>
+                <strong>Impact</strong> $20M+ cost savings & DX wins
+              </span>
+              <span>
+                <strong>Beyond code</strong> Badminton, fine arts & classical dance
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side reveal">
+          <div class="hero-orbit"></div>
+          <div class="hero-badge">Snapshot</div>
+          <div class="hero-grid">
+            <div class="hero-chip">
+              <strong>Front-of-stack focus</strong>
+              <small>End‑to‑end frontend, from design systems to testing.</small>
+              <div class="hero-chip-tags">
+                <span class="hero-chip-tag">React</span>
+                <span class="hero-chip-tag">TypeScript</span>
+                <span class="hero-chip-tag">Redux</span>
+                <span class="hero-chip-tag">Cypress</span>
+              </div>
+            </div>
+            <div class="hero-chip">
+              <strong>Systems & DX</strong>
+              <small>Improving reliability, reuse, and developer workflows.</small>
+              <div class="hero-chip-tags">
+                <span class="hero-chip-tag">Design systems</span>
+                <span class="hero-chip-tag">Testing</span>
+                <span class="hero-chip-tag">Tooling</span>
+              </div>
+            </div>
+            <div class="hero-chip">
+              <strong>Product impact</strong>
+              <small>Driving measurable outcomes for engineering & business.</small>
+              <div class="hero-chip-tags">
+                <span class="hero-chip-tag">$20M+ cost saving</span>
+                <span class="hero-chip-tag">Reduced support tickets</span>
+              </div>
+            </div>
+            <div class="hero-chip">
+              <strong>Always learning</strong>
+              <small>Bringing discipline from sports & arts into tech.</small>
+              <div class="hero-chip-tags">
+                <span class="hero-chip-tag">Badminton</span>
+                <span class="hero-chip-tag">Fine arts</span>
+                <span class="hero-chip-tag">Bharatanatyam</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <div class="sections">
+        <div>
+          <!-- EXPERIENCE -->
+          <section id="experience" class="section-card reveal">
+            <div class="section-header">
+              <h2 class="section-title">Experience</h2>
+              <span class="section-pill">4+ years · Frontend & Product</span>
+            </div>
+            <div class="experience-list">
+              <article class="experience-item">
+                <div class="experience-header">
+                  <div>
+                    <div class="experience-role">Frontend Development · ComeOn Group</div>
+                    <div class="experience-meta">
+                      <span>Sep 2025 – Present</span>
+                    </div>
+                  </div>
+                </div>
+                <ul class="experience-points">
+                  <li>
+                    Implemented Post Message API integrations for feature launches, enabling
+                    secure, decoupled communication between applications.
+                  </li>
+                  <li>
+                    Migrated the codebase to TypeScript, improving type safety, reducing
+                    runtime errors, and increasing maintainability for the team.
+                  </li>
+                </ul>
+              </article>
+
+              <article class="experience-item">
+                <div class="experience-header">
+                  <div>
+                    <div class="experience-role">Member of Technical Staff 2 · Nielsen</div>
+                    <div class="experience-meta">
+                      <span>Mar 2025 – Aug 2025</span>
+                      <span>Nielsen Media</span>
+                    </div>
+                  </div>
+                </div>
+                <ul class="experience-points">
+                  <li>
+                    Contributed to an internal product led by the SVP of Engineering that
+                    was adopted over an external tool.
+                  </li>
+                  <li>
+                    The solution was highlighted by the CTO for delivering an estimated
+                    <strong>$20M cost saving</strong> to the company.
+                  </li>
+                </ul>
+              </article>
+
+              <article class="experience-item">
+                <div class="experience-header">
+                  <div>
+                    <div class="experience-role">SDE 2 · InterviewBit / Scaler</div>
+                    <div class="experience-meta">
+                      <span>Sep 2020 – Feb 2025</span>
+                    </div>
+                  </div>
+                  <div class="experience-meta">
+                    <span>Core Product · Multiple pods</span>
+                  </div>
+                </div>
+                <ul class="experience-points">
+                  <li>
+                    Enhanced the in‑house video call product with dynamic quality control
+                    and screen sharing, significantly improving assessment performance and
+                    reducing proctoring costs.
+                  </li>
+                  <li>
+                    Led “App‑to‑Module” migrations, extracting reusable components into the
+                    design system and systematically paying down frontend tech debt.
+                  </li>
+                  <li>
+                    Spearheaded the frontend for a CMS website builder enabling instant
+                    hosting of custom JavaScript pages, cutting deployment cycles from days
+                    to minutes.
+                  </li>
+                  <li>
+                    Proposed and implemented Cypress for E2E testing, which later became the
+                    company‑wide standard for regression safety.
+                  </li>
+                  <li>
+                    Built a vanilla JavaScript alumni directory with QA functionality,
+                    generating over 1,500 monthly engagements.
+                  </li>
+                  <li>
+                    Mentored juniors and interns via code reviews, pair programming, and
+                    internal workshops, raising the overall frontend bar.
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <!-- PROJECTS -->
+          <section id="projects" class="section-card reveal">
+            <div class="section-header">
+              <h2 class="section-title">Selected Projects</h2>
+              <span class="section-pill">Shipped & impact‑driven</span>
+            </div>
+            <div class="projects-grid">
+              <article class="project-card">
+                <div class="project-header">
+                  <div class="project-title">Scaler Hackathon Chatbot (Team Lead)</div>
+                  <span class="project-badge">Real‑time support</span>
+                </div>
+                <p class="project-body">
+                  Led the development of a persona‑based real‑time chat widget integrated
+                  with the video platform using ChatGPT‑3.5, reducing support tickets by
+                  approximately 15%.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">ChatGPT‑3.5</span>
+                  <span class="project-tag">Real‑time UI</span>
+                  <span class="project-tag">Widget integration</span>
+                </div>
+              </article>
+
+              <article class="project-card">
+                <div class="project-header">
+                  <div class="project-title">Seekify · 1‑Minute Learning App</div>
+                  <span class="project-badge">React Native</span>
+                </div>
+                <p class="project-body">
+                  Contributed to the frontend of a one‑minute video learning mobile app for
+                  Seekify, focusing on responsive layouts and seamless video experiences.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">React Native</span>
+                  <span class="project-tag">Mobile UX</span>
+                </div>
+              </article>
+
+              <article class="project-card">
+                <div class="project-header">
+                  <div class="project-title">Momentum India · COVID‑19 App</div>
+                  <span class="project-badge">Social impact</span>
+                </div>
+                <p class="project-body">
+                  Built the frontend of a React Native mobile app used to help prevent the
+                  spread of COVID‑19, with a focus on clarity and usability under
+                  constraints.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">React Native</span>
+                  <span class="project-tag">Health</span>
+                  <span class="project-tag">Performance</span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div>
+          <!-- SKILLS -->
+          <section id="skills" class="section-card reveal">
+            <div class="section-header">
+              <h2 class="section-title">Skills</h2>
+              <span class="section-pill">Strengths at a glance</span>
+            </div>
+            <div class="skills-groups">
+              <div>
+                <div class="skills-group-title">Proficient</div>
+                <div class="chips">
+                  <span class="chip">
+                    <span class="chip-dot"></span> JavaScript
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> React
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> Redux
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> HTML
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> CSS
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> Webpack
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> Git
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> ES6+
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot"></span> Cypress
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <div class="skills-group-title">Comfortable</div>
+                <div class="chips">
+                  <span class="chip">
+                    <span class="chip-dot comfortable"></span> C++
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot comfortable"></span> Node.js
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot comfortable"></span> React Native
+                  </span>
+                  <span class="chip">
+                    <span class="chip-dot comfortable"></span> Jest
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- EDUCATION -->
+          <section id="education" class="section-card reveal">
+            <div class="section-header">
+              <h2 class="section-title">Education</h2>
+              <span class="section-pill">Foundations</span>
+            </div>
+            <div class="edu-item">
+              <strong>JSS Academy of Technical Education</strong>
+              <div class="edu-meta">
+                Bachelor of Technology · 2016 – 2020 · Noida
+              </div>
+            </div>
+          </section>
+
+          <!-- ACHIEVEMENTS -->
+          <section id="achievements" class="section-card reveal">
+            <div class="section-header">
+              <h2 class="section-title">Beyond Code</h2>
+              <span class="section-pill">Discipline · Art · Performance</span>
+            </div>
+            <ul class="achievement-list">
+              <li>
+                <span class="achievement-tag">Badminton · Dr. A.P.J. Abdul Kalam Sports Fest</span>
+                2019 Zonal Team Gold · 2018 Zonal Team Gold · 2017 Zonal Singles Silver · 2017
+                Zonal Doubles Gold.
+              </li>
+              <li>
+                <span class="achievement-tag">Fine Arts · CBSE</span>
+                Certificate of Merit for outstanding performance in painting, awarded to the top
+                0.1% of successful candidates.
+              </li>
+              <li>
+                <span class="achievement-tag">Classical Dance · Bharatanatyam</span>
+                Senior Diploma (First Division) & Junior Diploma (First Division) from Prayag
+                Sangeet Samiti.
+              </li>
+            </ul>
+          </section>
+
+          <!-- CONTACT -->
+          <section id="contact" class="section-card reveal">
+            <div class="section-header">
+              <h2 class="section-title">Contact</h2>
+              <span class="section-pill">Let’s build something</span>
+            </div>
+            <p class="contact-body">
+              Interested in collaborating on frontend‑heavy products, design systems, or
+              performance‑sensitive experiences. Short‑ and long‑term engagements welcome.
+            </p>
+            <ul class="contact-list">
+              <li>
+                Email:
+                <a href="mailto:meghnayadava2909@gmail.com">meghnayadava2909@gmail.com</a>
+              </li>
+              <li>
+                LinkedIn:
+                <a href="https://www.linkedin.com/in/meghna-y-85b34599/" target="_blank" rel="noreferrer">
+                  https://www.linkedin.com/in/meghna-y-85b34599/
+                </a>
+              </li>
+              <li>
+                GitHub:
+                <a href="https://github.com/crayx/" target="_blank" rel="noreferrer">
+                  https://github.com/crayx/
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>
+        <strong>Portfolio</strong> · Hand‑crafted UI with semantic HTML & modern CSS.
+      </span>
+      <span>Last updated · 2026</span>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+    const storedTheme = window.localStorage.getItem("theme");
+    if (storedTheme === "light") {
+      root.setAttribute("data-theme", "light");
+      toggle.textContent = "☀";
+    }
+
+    toggle.addEventListener("click", () => {
+      const current = root.getAttribute("data-theme") || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      window.localStorage.setItem("theme", next);
+      toggle.textContent = next === "light" ? "☀" : "☾";
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+
+</html>
