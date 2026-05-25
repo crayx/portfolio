@@ -1,28 +1,34 @@
-/* Patterns */
+# Patterns
 node_modules
 .next
 dist
 build
 
-/* Logs */
+# TypeScript incremental cache
+*.tsbuildinfo
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-/* System Files */
+# System Files
 .DS_Store
 Thumbs.db
 
-/* IDE */
+# IDE
 .vscode
 .idea
 *.swp
 *.swo
 *~
 
-/* Environment */
+# Environment
 .env
 .env.local
 .env.*.local
+
+# Vercel
+.vercel
