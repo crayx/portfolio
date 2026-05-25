@@ -18,7 +18,7 @@ export function Contact({ contacts }: ContactProps) {
     >
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Contact</h2>
-        <span className={styles.sectionPill}>Let's build something</span>
+        <span className={styles.sectionPill}>Let&rsquo;s build something</span>
       </div>
       <p className={styles.contactBody}>
         Interested in collaborating on frontend‑heavy products, design systems,

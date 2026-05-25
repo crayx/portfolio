@@ -45,12 +45,7 @@ interface HeroProps {
   status?: string;
 }
 
-export function Hero({
-  name,
-  role,
-  description,
-  socialLinks = [],
-}: HeroProps) {
+export function Hero({ name, role, description, socialLinks = [] }: HeroProps) {
   const parts = name.trim().split(/\s+/);
   const firstWord = parts[0] ?? name;
   const restWord = parts.slice(1).join(" ");
@@ -62,7 +57,9 @@ export function Hero({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (reduced) {
       setShowHire(true);
       return;
@@ -82,7 +79,8 @@ export function Hero({
         dy: Math.sin(angle) * distance,
         rotation: (Math.random() - 0.5) * 720,
         size: 6 + Math.random() * 8,
-        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+        color:
+          CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
         duration: 1200 + Math.random() * 900,
       };
     });
@@ -116,7 +114,7 @@ export function Hero({
             aria-label="Open Hire Me game"
           >
             <span>Hire</span>
-            <span>Me</span>
+            <span>Me Game</span>
           </button>
         </div>
       )}
