@@ -1,0 +1,451 @@
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - var(--nav-height, 70px));
+  padding: 48px 48px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+/* Massive name across the top */
+.heroName {
+  width: 50%;
+  text-align: center;
+  font-size: clamp(24px, 6vw, 72px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 0;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  padding-inline: 16px;
+}
+
+.nameOutlined,
+.nameFilled {
+  display: inline-block;
+  -webkit-text-stroke: 2px var(--text-main);
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, color;
+}
+
+.nameOutlined {
+  color: transparent;
+}
+
+.nameFilled {
+  color: var(--text-main);
+}
+
+.heroName:hover .nameOutlined {
+  color: var(--text-main);
+  transform: translateX(-8px);
+}
+
+.heroName:hover .nameFilled {
+  color: transparent;
+  transform: translateX(8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nameOutlined,
+  .nameFilled {
+    transition: none;
+  }
+
+  .heroName:hover .nameOutlined,
+  .heroName:hover .nameFilled {
+    transform: none;
+  }
+}
+
+/* Decorative glow behind the name */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(700px, 80vw);
+  height: min(500px, 60vh);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse at center,
+    var(--accent-soft) 0%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Bottom-left: role + description + CTA */
+.heroBottomLeft {
+  position: absolute;
+  left: 48px;
+  bottom: 48px;
+  max-width: 320px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heroRole {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.heroDescription {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--text-main);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  width: fit-content;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease, box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.heroCta:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+}
+
+/* Dog + wool intro animation — runs across a bottom strip above the corner content */
+.heroScene {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 220px;
+  height: 80px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Pet (dog or cat) — chases the wool from left to right.
+   Horizontal walk uses `translate`; vertical bob uses `transform`,
+   so the two animations compose without fighting each other. */
+.dog {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  font-size: 56px;
+  line-height: 1;
+  z-index: 1;
+  scale: -1 1; /* flip the emoji horizontally so the pet faces right */
+  translate: -160px 0;
+  animation:
+    dogWalk 5s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    dogBob 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+  will-change: translate, transform;
+}
+
+@keyframes dogWalk {
+  0%   { translate: -160px 0; }
+  55%  { translate: 42vw 0; }                       /* arrives at center */
+  68%  { translate: 42vw 0; }                       /* brief pause to "deliver" */
+  100% { translate: calc(100vw + 80px) 0; }         /* exits right */
+}
+
+@keyframes dogBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* Wool always leads the pet, then leaps up to morph into the Hire Me button */
+.wool {
+  /* Vertical leap distance — overridden on mobile where the hero is content-sized */
+  --wool-lift: calc(277px - 50vh);
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  font-size: 40px;
+  line-height: 1;
+  z-index: 2; /* render above the pet */
+  transform-origin: center center;
+  translate: -60px 0;
+  rotate: 0deg;
+  animation:
+    woolRoll 4.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+    woolPop 0.55s 4.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.15));
+  will-change: translate, rotate, scale, opacity;
+}
+
+/* Phases:
+   0–64%  : rolls in from off-screen left, arrives at horizontal center of the bottom strip
+   64–76% : pauses briefly while the pet "delivers" it
+   76–100%: leaps up to the hire button position at hero center, continuing to spin
+   The y-target `calc(277px - 50vh)` lifts the wool from its scene-strip anchor
+   (~222px above hero bottom) up to the hero's vertical center (≈50vh - 35px),
+   accounting for the wool's own ~40px height. */
+@keyframes woolRoll {
+  0%   { translate: -60px 0;                                 rotate: 0deg; }
+  64%  { translate: calc(50vw - 20px) 0;                     rotate: 1620deg; }
+  76%  { translate: calc(50vw - 20px) 0;                     rotate: 1680deg; }
+  100% { translate: calc(50vw - 20px) var(--wool-lift);      rotate: 2200deg; }
+}
+
+/* Wool transformation: at hero center, the yarn spins itself out — accelerating
+   spin, ballooning scale, fading to zero. The button is gated in React and
+   mounts only after this finishes (see WOOL_ANIMATION_MS in Hero.tsx). */
+@keyframes woolPop {
+  0%   { scale: 1;   opacity: 1;   rotate: 2200deg; }
+  60%  { scale: 2.2; opacity: 0.5; rotate: 2480deg; }
+  100% { scale: 3;   opacity: 0;   rotate: 2680deg; }
+}
+
+.hireWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  pointer-events: none;
+  z-index: 3;
+  /* Conditionally mounted after the wool dissolves — runs reveal immediately on mount. */
+  animation: hireReveal 0.55s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+  will-change: opacity, scale, rotate;
+}
+
+/* Button is born from the wool's final spin: continues the rotation direction,
+   overshoots slightly, then settles. */
+@keyframes hireReveal {
+  0%   { opacity: 0; scale: 0.2; rotate: -140deg; }
+  55%  { opacity: 1; scale: 1.1; rotate: 10deg; }
+  100% { opacity: 1; scale: 1;   rotate: 0deg; }
+}
+
+.hireCircle {
+  pointer-events: auto;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 2px solid var(--text-main);
+  background: var(--text-main);
+  color: var(--bg);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.05;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease, color 0.3s ease;
+}
+
+.hireCircle:hover {
+  transform: scale(1.05) translateY(-2px);
+  background: var(--bg);
+  color: var(--text-main);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+}
+
+.hireCircle:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dog, .wool {
+    display: none;
+  }
+
+  .hireWrap {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+    animation: none;
+  }
+
+  .confettiPiece {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Confetti burst — pieces explode from the button on click */
+.confettiLayer {
+  position: fixed;
+  top: calc(50% + var(--nav-height, 70px) / 2);
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2500;
+}
+
+.confettiPiece {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  background: var(--color);
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+  animation: confettiBurst var(--duration) cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.confettiPiece:nth-child(3n) {
+  border-radius: 50%;
+}
+
+.confettiPiece:nth-child(5n) {
+  width: calc(var(--size) * 1.4);
+  height: calc(var(--size) * 0.6);
+  border-radius: 1px;
+}
+
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 280px))
+      rotate(var(--rotation));
+  }
+}
+
+/* Bottom-right: vertical stack of social pills */
+.heroBottomRight {
+  position: absolute;
+  right: 48px;
+  bottom: 48px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.socialPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 140px;
+  transition: background 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.socialPill:hover {
+  background: var(--bg-soft);
+  border-color: var(--text-main);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero {
+    padding: 32px 24px;
+    min-height: auto;
+  }
+
+  /* Hero is content-sized on mobile, so the desktop leap math no longer points
+     at the hire button. Disable the lift; wool simply pops in place. */
+  .wool {
+    --wool-lift: 0px;
+  }
+
+  .heroName {
+    white-space: normal;
+    font-size: clamp(48px, 14vw, 96px);
+  }
+
+  .heroBottomLeft,
+  .heroBottomRight {
+    position: static;
+    max-width: none;
+    margin-top: 32px;
+  }
+
+  .heroBottomRight {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .socialPill {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroName {
+    font-size: clamp(40px, 12vw, 72px);
+  }
+
+  .heroRole {
+    font-size: 20px;
+  }
+
+  .heroScene {
+    height: 160px;
+  }
+
+  .dog {
+    font-size: 44px;
+  }
+
+  .wool {
+    font-size: 32px;
+  }
+
+  .hireCircle {
+    width: 108px;
+    height: 108px;
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,204 @@
+/* src/components/Navbar.module.css */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Left: Pet toggle */
+.navLeft {
+  display: flex;
+  align-items: center;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.petToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px 4px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-soft);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.petToggleLabel {
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.petToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.petToggleBtn:hover {
+  color: var(--text-main);
+  background: var(--bg);
+}
+
+.petToggleActive,
+.petToggleActive:hover {
+  background: var(--text-main);
+  color: var(--bg);
+}
+
+.petToggleText {
+  letter-spacing: -0.01em;
+}
+
+/* Center: Nav links with counts */
+.navLinks {
+  display: flex;
+  gap: 36px;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: opacity 0.2s ease;
+}
+
+.navLinks a:hover {
+  opacity: 0.7;
+}
+
+.count {
+  color: var(--text-muted);
+  font-size: 0.8em;
+  margin-left: 2px;
+  font-weight: 400;
+}
+
+/* Right: Theme toggle + CTA */
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle {
+  background: none;
+  border: 1px solid var(--border-subtle);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-main);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.toggle:hover {
+  background-color: var(--bg-soft);
+  transform: scale(1.05);
+}
+
+.ctaPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  background-color: var(--text-main);
+  color: var(--bg);
+  padding: 10px 22px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ctaPill:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.ctaPill span:last-child {
+  transition: transform 0.2s ease;
+}
+
+.ctaPill:hover span:last-child {
+  transform: translate(2px, -2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .navLinks {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 16px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .petToggleLabel {
+    display: none;
+  }
+
+  .petToggle {
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .petToggleBtn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .petToggleText {
+    display: none;
+  }
+}

@@ -1,0 +1,45 @@
+@import './Experience.module.css';
+
+.achievementList {
+  list-style: none;
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.achievementList li {
+  line-height: 1.55;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  border: 1px solid var(--border-subtle);
+  transition: background 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+
+.achievementList li:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+}
+
+.achievementTag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-subtle);
+  margin-right: 10px;
+  color: var(--accent-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  vertical-align: middle;
+}
+
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}

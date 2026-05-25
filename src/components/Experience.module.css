@@ -1,0 +1,188 @@
+.sectionCard {
+  border-radius: var(--radius-xl);
+  padding: 28px 28px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.75s var(--ease-out-expo),
+    transform 0.75s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+/* Soft accent glow in the top-right corner of every card — echoes the Hero's
+   radial glow without competing with it. */
+.sectionCard::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(ellipse at center, var(--accent-soft) 0%, transparent 70%);
+  filter: blur(20px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sectionCard > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionCard {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  font-size: var(--fs-h2);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.sectionPill {
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  background: var(--bg-soft);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.experienceList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: var(--fs-body);
+}
+
+.experienceItem {
+  padding: 18px 18px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  transition: transform 0.3s var(--ease-out),
+    background 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+
+/* Thin accent stripe on the left edge — animates in on hover */
+.experienceItem::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent-strong);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transform-origin: center;
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.experienceItem:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.experienceItem:hover::after {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.experienceHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.experienceRole {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-main);
+  letter-spacing: -0.005em;
+}
+
+.experienceMeta {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.experienceMeta span {
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+}
+
+.experiencePoints {
+  margin-top: 10px;
+  padding-left: 20px;
+  color: var(--text-muted);
+  font-size: var(--fs-body);
+}
+
+.experiencePoints li {
+  margin-bottom: 6px;
+  line-height: 1.55;
+}
+
+.experiencePoints li::marker {
+  color: var(--accent-strong);
+}
+
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .sectionCard {
+    padding: 22px 18px 20px;
+    margin-bottom: 18px;
+  }
+
+  .sectionHeader {
+    margin-bottom: 16px;
+  }
+
+  .experienceItem {
+    padding: 14px 14px 12px;
+  }
+}
