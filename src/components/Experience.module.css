@@ -7,6 +7,9 @@
   position: relative;
   overflow: hidden;
   margin-bottom: 24px;
+  /* Per-element fallback for scroll-padding-top on the html scroller —
+     keeps anchor links from landing under the fixed navbar. */
+  scroll-margin-top: calc(var(--nav-height, 70px) + 16px);
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.75s var(--ease-out-expo),
