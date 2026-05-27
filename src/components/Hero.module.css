@@ -189,7 +189,7 @@
 .petPendant {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 20%;
   translate: -50% 0;
   z-index: 2;
   display: flex;
@@ -207,7 +207,7 @@
    the hero. Height controls how far the circle hangs from the top. */
 .petString {
   width: 1.5px;
-  height: 140px;
+  height: 168px;
   background: var(--hero-ink);
   opacity: 0.55;
 }
@@ -427,7 +427,7 @@
 
   /* Shorter string on mobile so the pendant doesn't push the layout. */
   .petString {
-    height: 90px;
+    height: 140px;
   }
 
   .petCircle {

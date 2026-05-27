@@ -186,11 +186,20 @@
     display: none;
   }
 
-  /* Hide the cat/dog selection on mobile — the navbar gets crowded with the
-     theme toggle and CTA, and the pet still drives the (now-hidden) hero
-     scene which is also off on mobile. */
-  .petToggle {
+  /* Hide just the "Cat or dog person?" label on mobile, keep the toggle
+     itself visible — it drives the hero pendant. */
+  .petToggleLabel {
     display: none;
+  }
+
+  .petToggle {
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .petToggleBtn {
+    padding: 4px 10px;
+    font-size: 12px;
   }
 
   .ctaPill {
