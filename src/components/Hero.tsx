@@ -1,14 +1,9 @@
 "use client";
 import { useEffect, useState, type CSSProperties } from "react";
+import Image from "next/image";
 import styles from "./Hero.module.css";
 import { HireMeGame } from "./HireMeGame";
 import { usePet } from "@/hooks/usePet";
-
-/* Matches the end of woolPop in Hero.module.css — keep these in sync.
-   woolPop starts at 4.25s with duration 0.55s → ends at 4.8s. The button
-   mounts at that exact moment so it materializes at the wool's landing
-   point with zero gap. */
-const WOOL_ANIMATION_MS = 4800;
 
 interface ConfettiPiece {
   id: number;
@@ -45,7 +40,13 @@ interface HeroProps {
   status?: string;
 }
 
-export function Hero({ name, role, description, socialLinks = [] }: HeroProps) {
+export function Hero({
+  name,
+  role,
+  description,
+  image,
+  socialLinks = [],
+}: HeroProps) {
   const parts = name.trim().split(/\s+/);
   const firstWord = parts[0] ?? name;
   const restWord = parts.slice(1).join(" ");
@@ -53,23 +54,14 @@ export function Hero({ name, role, description, socialLinks = [] }: HeroProps) {
   const { pet } = usePet();
   const petEmoji = pet === "cat" ? "🐈" : "🐕";
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
-  const [showHire, setShowHire] = useState(false);
 
+  // The navbar's Hire Me button lives in a separate component, so it
+  // signals here via a window event to open the same game modal.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    // The wool/dog scene is hidden under 900px (see Hero.module.css), so
-    // skip the timer there — otherwise mobile users wait ~5s for the
-    // button to mount.
-    const isMobile = window.matchMedia("(max-width: 900px)").matches;
-    if (reduced || isMobile) {
-      setShowHire(true);
-      return;
-    }
-    const id = window.setTimeout(() => setShowHire(true), WOOL_ANIMATION_MS);
-    return () => window.clearTimeout(id);
+    const handler = () => setGameOpen(true);
+    window.addEventListener("open-hire-game", handler);
+    return () => window.removeEventListener("open-hire-game", handler);
   }, []);
 
   const fireConfetti = () => {
@@ -96,32 +88,28 @@ export function Hero({ name, role, description, socialLinks = [] }: HeroProps) {
     <section className={styles.hero}>
       <h1 className={styles.heroName}>
         <span className={styles.nameOutlined}>{firstWord}</span>
-        {restWord && (
-          <>
-            {" "}
-            <span className={styles.nameFilled}>{restWord}</span>
-          </>
-        )}
+        {restWord && <span className={styles.nameFilled}>{restWord}</span>}
       </h1>
+
+      {image && (
+        <div className={styles.heroFigure} aria-hidden="true">
+          <Image
+            src={image}
+            alt=""
+            width={793}
+            height={2505}
+            priority
+            sizes="(max-width: 900px) 60vw, 480px"
+            className={styles.heroFigureImg}
+          />
+        </div>
+      )}
 
       <div className={styles.heroScene} key={pet} aria-hidden="true">
         <div className={styles.dog}>{petEmoji}</div>
         <div className={styles.wool}>🧶</div>
       </div>
 
-      {showHire && (
-        <div className={styles.hireWrap}>
-          <button
-            type="button"
-            className={styles.hireCircle}
-            onClick={() => setGameOpen(true)}
-            aria-label="Open Hire Me game"
-          >
-            <span>Hire</span>
-            <span>Me Game</span>
-          </button>
-        </div>
-      )}
 
       {confetti.length > 0 && (
         <div className={styles.confettiLayer} aria-hidden="true">
@@ -156,7 +144,7 @@ export function Hero({ name, role, description, socialLinks = [] }: HeroProps) {
       </div>
 
       {socialLinks.length > 0 && (
-        <div className={styles.heroBottomRight}>
+        <div className={styles.heroTopLeft}>
           {socialLinks.map((link) => (
             <a
               key={link.label}

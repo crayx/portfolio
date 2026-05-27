@@ -71,10 +71,16 @@ export function Navbar() {
         >
           {theme === "dark" ? "☀" : "☾"}
         </button>
-        <a href="#contact" className={styles.ctaPill}>
-          Let&rsquo;s Talk
+        <button
+          type="button"
+          onClick={() =>
+            window.dispatchEvent(new Event("open-hire-game"))
+          }
+          className={styles.ctaPill}
+        >
+          Hire Me
           <span aria-hidden>↗</span>
-        </a>
+        </button>
       </div>
     </header>
   );

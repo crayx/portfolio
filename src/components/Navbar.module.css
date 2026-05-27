@@ -150,6 +150,9 @@
   border-radius: 9999px;
   font-size: 0.9rem;
   font-weight: 500;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 

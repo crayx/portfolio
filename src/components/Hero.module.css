@@ -1,35 +1,54 @@
 .hero {
+  /* Scoped palette — green canvas with pink ink. Brand inversion of the
+     page background so the hero reads as a strong statement in both
+     themes. The dark theme's hero-bg-strong dims to a deeper green. */
+  --hero-bg: var(--brand-green);
+  --hero-bg-strong: #3f8e29;
+  --hero-ink: var(--brand-pink);
+  --hero-ink-soft: rgba(244, 208, 236, 0.72);
+
   position: relative;
   width: 100%;
   min-height: calc(100vh - var(--nav-height, 70px));
-  padding: 48px 48px 48px;
+  /* Horizontal padding matches .nav (32px) and .sections > div (32px) so
+     the hero sits on the same gutters as the rest of the page. */
+  padding: 48px 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
+  background:
+    radial-gradient(ellipse at 30% 70%, var(--hero-bg-strong) 0%, transparent 65%),
+    var(--hero-bg);
+  color: var(--hero-ink);
 }
 
-/* Massive name across the top */
+[data-theme='light'] .hero {
+  --hero-bg-strong: #4ea031;
+}
+
+/* Name anchored to lower-right, stacked on two lines, overlaying the photo. */
 .heroName {
-  width: 50%;
-  text-align: center;
-  font-size: clamp(24px, 6vw, 72px);
+  position: absolute;
+  right: 32px;
+  bottom: 26%;
+  text-align: right;
+  font-size: clamp(56px, 13vw, 180px);
   font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
   margin: 0;
   white-space: nowrap;
-  position: relative;
-  z-index: 1;
+  /* Above the figure (z:1) so the name reads on top of the photo. */
+  z-index: 2;
   text-transform: uppercase;
-  padding-inline: 16px;
 }
 
 .nameOutlined,
 .nameFilled {
-  display: inline-block;
-  -webkit-text-stroke: 2px var(--text-main);
+  display: block;
+  -webkit-text-stroke: 2px var(--hero-ink);
   transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, color;
@@ -40,11 +59,11 @@
 }
 
 .nameFilled {
-  color: var(--text-main);
+  color: var(--hero-ink);
 }
 
 .heroName:hover .nameOutlined {
-  color: var(--text-main);
+  color: var(--hero-ink);
   transform: translateX(-8px);
 }
 
@@ -65,29 +84,14 @@
   }
 }
 
-/* Decorative glow behind the name */
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(700px, 80vw);
-  height: min(500px, 60vh);
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
-    ellipse at center,
-    var(--accent-soft) 0%,
-    transparent 70%
-  );
-  filter: blur(40px);
-  z-index: 0;
-  pointer-events: none;
-}
+/* (The previous purple radial glow has been retired — the orange hero
+   background already does the warm-light job and a second blur layer
+   muddied the figure silhouette.) */
 
 /* Bottom-left: role + description + CTA */
 .heroBottomLeft {
   position: absolute;
-  left: 48px;
+  left: 32px;
   bottom: 48px;
   max-width: 320px;
   z-index: 3;
@@ -99,7 +103,7 @@
 .heroRole {
   font-size: 24px;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--hero-ink);
   margin: 0 0 4px;
   letter-spacing: -0.01em;
 }
@@ -107,8 +111,9 @@
 .heroDescription {
   font-size: 14px;
   line-height: 1.5;
-  color: var(--text-muted);
+  color: var(--hero-ink);
   margin: 0 0 12px;
+  opacity: 0.92;
 }
 
 .heroCtas {
@@ -124,21 +129,58 @@
   gap: 10px;
   padding: 12px 22px;
   border-radius: 999px;
-  background: var(--text-main);
-  color: var(--bg);
+  background: var(--hero-ink);
+  color: var(--hero-bg-strong);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   width: fit-content;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.25s ease, box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 .heroCta:hover {
   opacity: 0.95;
   transform: translateY(-2px);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+}
+
+/* Hero figure — anchored to the right, ~76vh tall (20% smaller than before).
+   Sits BEHIND the name (z:1 vs heroName z:2) so the type can overlay it. */
+.heroFigure {
+  position: absolute;
+  right: 32px;
+  bottom: 0;
+  height: 76vh;
+  max-height: calc(100vh - var(--nav-height, 70px));
+  width: auto;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.45));
+  opacity: 0;
+  animation: figureRise 1.2s 0.25s var(--ease-out-expo) forwards;
+  will-change: opacity, transform;
+}
+
+.heroFigureImg {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes figureRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroFigure {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
 /* Dog + wool intro animation — runs across a bottom strip above the corner content */
@@ -350,40 +392,47 @@
   }
 }
 
-/* Bottom-right: vertical stack of social pills */
-.heroBottomRight {
+/* Top-left: vertical stack of social pills, just under the navbar */
+.heroTopLeft {
   position: absolute;
-  right: 48px;
-  bottom: 48px;
+  top: 32px;
+  left: 32px;
   z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  align-items: stretch;
+  gap: 6px;
+  align-items: flex-start;
 }
 
 .socialPill {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-  background: transparent;
-  color: var(--text-main);
+  gap: 8px;
+  padding: 4px 0;
+  color: var(--hero-ink);
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  min-width: 140px;
-  transition: background 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+}
+
+.socialPill::after {
+  content: "↗";
+  font-size: 0.85em;
+  opacity: 0.7;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
 }
 
 .socialPill:hover {
-  background: var(--bg-soft);
-  border-color: var(--text-main);
-  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+.socialPill:hover::after {
+  transform: translate(2px, -2px);
+  opacity: 1;
 }
 
 /* Responsive */
@@ -404,9 +453,18 @@
   }
 
   .heroName {
+    position: static;
+    right: auto;
+    bottom: auto;
     width: 100%;
+    text-align: center;
     white-space: normal;
     font-size: clamp(40px, 11vw, 84px);
+  }
+
+  .nameOutlined,
+  .nameFilled {
+    display: inline-block;
   }
 
   /* Take the hire button OUT of absolute positioning on mobile — center it
@@ -424,8 +482,26 @@
     display: none;
   }
 
+  /* Figure flows inline on mobile so it can't push off-screen on short
+     viewports. Centered, capped to ~50vh, sits between title and CTAs. */
+  .heroFigure {
+    position: static;
+    translate: 0 0;
+    height: auto;
+    max-height: 50vh;
+    max-width: 70vw;
+    margin: 0 auto;
+    align-self: center;
+    animation: figureFadeIn 0.8s 0.15s var(--ease-out-expo) forwards;
+  }
+
+  @keyframes figureFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   .heroBottomLeft,
-  .heroBottomRight {
+  .heroTopLeft {
     position: static;
     max-width: none;
     margin-top: 16px;
@@ -437,15 +513,13 @@
     justify-content: center;
   }
 
-  .heroBottomRight {
+  .heroTopLeft {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 14px;
     margin-top: 8px;
-  }
-
-  .socialPill {
-    min-width: 0;
+    order: -1; /* render social row above the title on mobile */
   }
 }
 
@@ -473,8 +547,7 @@
   }
 
   .socialPill {
-    padding: 9px 14px;
-    font-size: 13px;
+    font-size: 11px;
   }
 
   .heroCta {
