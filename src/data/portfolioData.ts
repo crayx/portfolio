@@ -95,7 +95,9 @@ export const portfolioData: PortfolioData = {
       category: 'Proficient',
       skills: [
         { name: 'JavaScript', level: 'proficient' },
+        { name: 'TypeScript', level: 'proficient' },
         { name: 'React', level: 'proficient' },
+        { name: 'Next.js', level: 'proficient' },
         { name: 'Redux', level: 'proficient' },
         { name: 'HTML', level: 'proficient' },
         { name: 'CSS', level: 'proficient' },
