@@ -52,7 +52,6 @@ export function Hero({
   const restWord = parts.slice(1).join(" ");
   const [gameOpen, setGameOpen] = useState(false);
   const { pet } = usePet();
-  const petEmoji = pet === "cat" ? "🐈" : "🐕";
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
 
   // The navbar's Hire Me button lives in a separate component, so it
@@ -105,9 +104,17 @@ export function Hero({
         </div>
       )}
 
-      <div className={styles.heroScene} key={pet} aria-hidden="true">
-        <div className={styles.dog}>{petEmoji}</div>
-        <div className={styles.wool}>🧶</div>
+      <div className={styles.petPendant} key={pet} aria-hidden="true">
+        <span className={styles.petString} />
+        <div className={styles.petCircle}>
+          <Image
+            src={pet === "cat" ? "/images/cat.jpg" : "/images/dog.jpg"}
+            alt=""
+            width={200}
+            height={200}
+            className={styles.petImage}
+          />
+        </div>
       </div>
 
 

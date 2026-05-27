@@ -183,89 +183,72 @@
   }
 }
 
-/* Dog + wool intro animation — runs across a bottom strip above the corner content */
-.heroScene {
+/* Pet pendant — a circular photo of the cat or dog, hanging from a thin
+   string. The whole pendant drops in from above and then settles with a
+   gentle damped swing. Re-keyed on pet change so the animation replays. */
+.petPendant {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 220px;
-  height: 80px;
-  z-index: 1;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
   pointer-events: none;
-}
-
-/* Pet (dog or cat) — chases the wool from left to right.
-   Horizontal walk uses `translate`; vertical bob uses `transform`,
-   so the two animations compose without fighting each other. */
-.dog {
-  position: absolute;
-  bottom: 4px;
-  left: 0;
-  font-size: 56px;
-  line-height: 1;
-  z-index: 1;
-  scale: -1 1; /* flip the emoji horizontally so the pet faces right */
-  translate: -160px 0;
   animation:
-    dogWalk 5s cubic-bezier(0.4, 0, 0.2, 1) forwards,
-    dogBob 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
-  will-change: translate, transform;
+    pendantDrop 1.4s var(--ease-out-expo) both,
+    pendantSwing 3.2s 1.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  will-change: translate, rotate;
 }
 
-@keyframes dogWalk {
-  0%   { translate: -160px 0; }
-  55%  { translate: 42vw 0; }                       /* arrives at center */
-  68%  { translate: 42vw 0; }                       /* brief pause to "deliver" */
-  100% { translate: calc(100vw + 80px) 0; }         /* exits right */
+/* The string — thin vertical line that anchors the circle to the top of
+   the hero. Height controls how far the circle hangs from the top. */
+.petString {
+  width: 1.5px;
+  height: 140px;
+  background: var(--hero-ink);
+  opacity: 0.55;
 }
 
-@keyframes dogBob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-3px); }
+.petCircle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--hero-ink);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+  margin-top: -1px;
 }
 
-/* Wool always leads the pet, then leaps up to morph into the Hire Me button */
-.wool {
-  /* Vertical leap distance — overridden on mobile where the hero is content-sized */
-  --wool-lift: calc(277px - 50vh);
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  font-size: 40px;
-  line-height: 1;
-  z-index: 2; /* render above the pet */
-  transform-origin: center center;
-  translate: -60px 0;
-  rotate: 0deg;
-  animation:
-    woolRoll 4.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
-    woolPop 0.55s 4.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.15));
-  will-change: translate, rotate, scale, opacity;
+.petImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* Phases:
-   0–64%  : rolls in from off-screen left, arrives at horizontal center of the bottom strip
-   64–76% : pauses briefly while the pet "delivers" it
-   76–100%: leaps up to the hire button position at hero center, continuing to spin
-   The y-target `calc(277px - 50vh)` lifts the wool from its scene-strip anchor
-   (~222px above hero bottom) up to the hero's vertical center (≈50vh - 35px),
-   accounting for the wool's own ~40px height. */
-@keyframes woolRoll {
-  0%   { translate: -60px 0;                                 rotate: 0deg; }
-  64%  { translate: calc(50vw - 20px) 0;                     rotate: 1620deg; }
-  76%  { translate: calc(50vw - 20px) 0;                     rotate: 1680deg; }
-  100% { translate: calc(50vw - 20px) var(--wool-lift);      rotate: 2200deg; }
+@keyframes pendantDrop {
+  from { translate: -50% -110%; }
+  to   { translate: -50% 0; }
 }
 
-/* Wool transformation: at hero center, the yarn spins itself out — accelerating
-   spin, ballooning scale, fading to zero. The button is gated in React and
-   mounts only after this finishes (see WOOL_ANIMATION_MS in Hero.tsx). */
-@keyframes woolPop {
-  0%   { scale: 1;   opacity: 1;   rotate: 2200deg; }
-  60%  { scale: 2.2; opacity: 0.5; rotate: 2480deg; }
-  100% { scale: 3;   opacity: 0;   rotate: 2680deg; }
+/* Damped pendulum swing — starts wide, settles to zero. */
+@keyframes pendantSwing {
+  0%   { rotate: 0deg; }
+  20%  { rotate: 7deg; }
+  40%  { rotate: -5deg; }
+  60%  { rotate: 3deg; }
+  80%  { rotate: -1.5deg; }
+  100% { rotate: 0deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petPendant {
+    animation: none;
+    translate: -50% 0;
+  }
 }
 
 .hireWrap {
@@ -325,10 +308,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dog, .wool {
-    display: none;
-  }
-
   .hireWrap {
     opacity: 1;
     scale: 1;
@@ -446,10 +425,14 @@
     gap: 24px;
   }
 
-  /* Hero is content-sized on mobile, so the desktop leap math no longer points
-     at the hire button. Disable the lift; wool simply pops in place. */
-  .wool {
-    --wool-lift: 0px;
+  /* Shorter string on mobile so the pendant doesn't push the layout. */
+  .petString {
+    height: 90px;
+  }
+
+  .petCircle {
+    width: 72px;
+    height: 72px;
   }
 
   .heroName {
@@ -474,12 +457,6 @@
     translate: 0 0;
     align-self: center;
     margin: 8px 0;
-  }
-
-  /* Hide the dog/wool intro on mobile — the leap math doesn't apply when the
-     hero is content-sized, and the small scene fights with the title. */
-  .heroScene {
-    display: none;
   }
 
   /* Figure flows inline on mobile so it can't push off-screen on short
