@@ -391,6 +391,10 @@
   .hero {
     padding: 32px 24px;
     min-height: auto;
+    /* Centered flow on mobile so the in-flow .hireWrap sits between the
+       title and the bottom content without absolute overlap. */
+    justify-content: center;
+    gap: 24px;
   }
 
   /* Hero is content-sized on mobile, so the desktop leap math no longer points
@@ -400,21 +404,44 @@
   }
 
   .heroName {
+    width: 100%;
     white-space: normal;
-    font-size: clamp(48px, 14vw, 96px);
+    font-size: clamp(40px, 11vw, 84px);
+  }
+
+  /* Take the hire button OUT of absolute positioning on mobile — center it
+     in the flex flow so it never collides with the title or corner content. */
+  .hireWrap {
+    position: static;
+    translate: 0 0;
+    align-self: center;
+    margin: 8px 0;
+  }
+
+  /* Hide the dog/wool intro on mobile — the leap math doesn't apply when the
+     hero is content-sized, and the small scene fights with the title. */
+  .heroScene {
+    display: none;
   }
 
   .heroBottomLeft,
   .heroBottomRight {
     position: static;
     max-width: none;
-    margin-top: 32px;
+    margin-top: 16px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroCtas {
+    justify-content: center;
   }
 
   .heroBottomRight {
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 24px;
+    justify-content: center;
+    margin-top: 8px;
   }
 
   .socialPill {
@@ -423,29 +450,46 @@
 }
 
 @media (max-width: 640px) {
+  .hero {
+    padding: 28px 16px;
+  }
+
   .heroName {
-    font-size: clamp(40px, 12vw, 72px);
+    font-size: clamp(36px, 12vw, 64px);
   }
 
   .heroRole {
     font-size: 20px;
   }
 
-  .heroScene {
-    height: 160px;
-  }
-
-  .dog {
-    font-size: 44px;
-  }
-
-  .wool {
-    font-size: 32px;
+  .heroDescription {
+    font-size: 14px;
   }
 
   .hireCircle {
     width: 108px;
     height: 108px;
     font-size: 16px;
+  }
+
+  .socialPill {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  .heroCta {
+    padding: 11px 20px;
+  }
+}
+
+@media (max-width: 380px) {
+  .heroName {
+    font-size: clamp(32px, 11vw, 52px);
+  }
+
+  .hireCircle {
+    width: 96px;
+    height: 96px;
+    font-size: 15px;
   }
 }

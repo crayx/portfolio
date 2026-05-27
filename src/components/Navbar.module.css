@@ -176,29 +176,44 @@
 @media (max-width: 768px) {
   .nav {
     padding: 0 16px;
+    gap: 8px;
   }
 
   .navLinks {
     display: none;
   }
 
-  .petToggleLabel {
+  /* Hide the cat/dog selection on mobile — the navbar gets crowded with the
+     theme toggle and CTA, and the pet still drives the (now-hidden) hero
+     scene which is also off on mobile. */
+  .petToggle {
     display: none;
   }
 
-  .petToggle {
-    padding: 4px;
-    gap: 2px;
+  .ctaPill {
+    padding: 8px 16px;
+    font-size: 0.85rem;
   }
 
-  .petToggleBtn {
-    padding: 4px 8px;
-    font-size: 12px;
+  .navActions {
+    gap: 8px;
   }
 }
 
 @media (max-width: 480px) {
   .petToggleText {
     display: none;
+  }
+
+  /* CTA hides at the smallest sizes — pet toggle + theme + status pill is
+     already a lot; the "Let's Talk" link is duplicated at the bottom of
+     the hero anyway. */
+  .ctaPill {
+    display: none;
+  }
+
+  .toggle {
+    width: 36px;
+    height: 36px;
   }
 }

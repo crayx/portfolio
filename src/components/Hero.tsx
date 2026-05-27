@@ -60,7 +60,11 @@ export function Hero({ name, role, description, socialLinks = [] }: HeroProps) {
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (reduced) {
+    // The wool/dog scene is hidden under 900px (see Hero.module.css), so
+    // skip the timer there — otherwise mobile users wait ~5s for the
+    // button to mount.
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+    if (reduced || isMobile) {
       setShowHire(true);
       return;
     }
